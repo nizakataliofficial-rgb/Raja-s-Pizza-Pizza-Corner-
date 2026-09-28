@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Raja's Pizza</title>
+    <meta name="description" content="Raja's Pizza – premium pizza, deals, and fast delivery." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+    <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="script.js"></script>
+</head>
+
+<body>
+    <div class="page-shell">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-top">
+                <button class="icon-btn menu-toggle" aria-label="Toggle menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <button class="icon-btn nav-btn active" type="button" aria-label="Home" data-action="home">
+                    <i class="fa-solid fa-house"></i>
+                </button>
+                <button class="icon-btn nav-btn" type="button" aria-label="Menu" data-action="menu">
+                    <i class="fa-solid fa-utensils"></i>
+                </button>
+                <button class="icon-btn nav-btn" type="button" aria-label="Deals" data-action="deals">
+                    <i class="fa-solid fa-fire"></i>
+                </button>
+                <button class="icon-btn nav-btn" type="button" aria-label="Location" data-action="location">
+                    <i class="fa-solid fa-location-dot"></i>
+                </button>
+                <button class="icon-btn nav-btn" type="button" aria-label="Account" data-action="account">
+                    <i class="fa-solid fa-user"></i>
+                </button>
+            </div>
+        </aside>
+
+        <main class="content-area">
+            <header class="topbar">
+                <div class="brand-wrap">
+                    <div class="logo-box" aria-label="Raja's Pizza brand logo">
+                        <div class="logo-mark">R</div>
+                        <span>Raja's Pizza</span>
+                    </div>
+                </div>
+
+                <button class="location-box" id="locationBtn" type="button" aria-label="Choose delivery location">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <div>
+                        <small>Delivery</small>
+                        <strong>Select location</strong>
+                    </div>
+                    <i class="fa-solid fa-angle-down"></i>
+                </button>
+
+                <button class="hot-deals-btn" id="hotDealsBtn" type="button">
+                    <i class="fa-solid fa-bolt"></i> HOT DEALS
+                </button>
+
+                <div class="account-area" id="accountArea">
+                    <button class="login-btn" id="loginBtn" type="button" aria-haspopup="true"
+                        aria-expanded="false">Sign In</button>
+                    <div class="account-menu" id="accountMenu" role="menu" aria-label="Account options" hidden>
+                        <p class="account-menu-label">Signed in as</p>
+                        <strong id="accountMenuName">Customer</strong>
+                        <span id="accountMenuEmail"></span>
+                        <button class="logout-btn" id="logoutBtn" type="button" role="menuitem">
+                            <i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i>
+                            Log out
+                        </button>
+                    </div>
+                </div>
+
+                <button class="cart-btn" id="cartBtn" type="button" data-count="0" aria-label="Cart with 0 items">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </button>
+            </header>
+
+            <section class="hero-banner" aria-label="Promotional banner">
+                <div class="banner-slide active">
+                    <div class="banner-copy">
+                        <span class="badge">Fresh &amp; Hot</span>
+                        <h1>Hand-tossed pizzas made for cravings.</h1>
+                        <p>Enjoy cheesy classics, sizzling deals, and premium delivery for every craving.</p>
+                        <div class="hero-actions">
+                            <button class="primary-btn" id="orderBtn" type="button">Order Now</button>
+                            <button class="secondary-btn" id="viewMenuBtn" type="button">View Menu</button>
+                        </div>
+                    </div>
+
+                    <div class="pizza-carousel" id="pizzaCarousel" aria-label="Featured pizza photos">
+                        <div class="pizza-slide active" aria-hidden="false">
+                            <img src="https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=900&q=85"
+                                alt="Freshly baked pizza topped with cheese and herbs" />
+                        </div>
+                        <div class="pizza-slide" aria-hidden="true">
+                            <img src="https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?auto=format&fit=crop&w=900&q=85"
+                                alt="Golden crust pizza with fresh toppings" loading="lazy" />
+                        </div>
+                        <div class="pizza-slide" aria-hidden="true">
+                            <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=85"
+                                alt="Classic tomato and mozzarella pizza" loading="lazy" />
+                        </div>
+                        <div class="pizza-slide" aria-hidden="true">
+                            <img src="https://images.unsplash.com/photo-1552539618-7eec9b4d1796?auto=format&fit=crop&w=900&q=85"
+                                alt="Cheesy pizza fresh from the oven" loading="lazy" />
+                        </div>
+                        <div class="pizza-slide" aria-hidden="true">
+                            <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&fit=crop&w=900&q=85"
+                                alt="Loaded pizza with a crisp golden crust" loading="lazy" />
+                        </div>
+                        <div class="pizza-slide" aria-hidden="true">
+                            <img src="https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=900&q=85"
+                                alt="Raja's style pizza with colorful toppings" loading="lazy" />
+                        </div>
+                        <div class="pizza-carousel-controls">
+                            <button class="pizza-carousel-arrow" id="pizzaPrevious" type="button"
+                                aria-label="Previous pizza photo"><i class="fa-solid fa-chevron-left"></i></button>
+                            <div class="pizza-carousel-dots" aria-label="Choose pizza photo">
+                                <button class="pizza-dot active" type="button" data-slide="0"
+                                    aria-label="Show pizza photo 1" aria-current="true"></button>
+                                <button class="pizza-dot" type="button" data-slide="1" aria-label="Show pizza photo 2"
+                                    aria-current="false"></button>
+                                <button class="pizza-dot" type="button" data-slide="2" aria-label="Show pizza photo 3"
+                                    aria-current="false"></button>
+                                <button class="pizza-dot" type="button" data-slide="3" aria-label="Show pizza photo 4"
+                                    aria-current="false"></button>
+                                <button class="pizza-dot" type="button" data-slide="4" aria-label="Show pizza photo 5"
+                                    aria-current="false"></button>
+                                <button class="pizza-dot" type="button" data-slide="5" aria-label="Show pizza photo 6"
+                                    aria-current="false"></button>
+                            </div>
+                            <button class="pizza-carousel-arrow" id="pizzaNext" type="button"
+                                aria-label="Next pizza photo"><i class="fa-solid fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <nav class="category-nav" aria-label="Categories">
+                <button class="category-chip active" type="button" data-category="Midnight Deals">Midnight
+                    Deals</button>
+                <button class="category-chip" type="button" data-category="New Arrival">New Arrival</button>
+                <button class="category-chip" type="button" data-category="Pizza & Drink Combos">Pizza &amp; Drink
+                    Combos</button>
+                <button class="category-chip" type="button" data-category="Max Deals">Max Deals</button>
+                <button class="category-chip" type="button" data-category="Promo Deals">Promo Deals</button>
+                <button class="category-chip" type="button" data-category="Max Value Deals">Max Value Deals</button>
+                <button class="category-chip" type="button" data-category="2B2B Deals">2B2B Deals</button>
+                <button class="category-chip" type="button" data-category="Royal Crown Pizza">Royal Crown Pizza</button>
+                <button class="category-chip" type="button" data-category="Appetizers">Appetizers</button>
+                <button class="category-chip" type="button" data-category="Chicken Pizzas">Chicken Pizzas</button>
+                <button class="category-chip" type="button" data-category="Beef & Veggie Pizzas">Beef &amp; Veggie
+                    Pizzas</button>
+                <button class="category-chip" type="button" data-category="Pizza Pairs">Pizza Pairs</button>
+                <button class="category-chip" type="button" data-category="Lasagne And Pastas">Lasagne And
+                    Pastas</button>
+                <button class="category-chip" type="button" data-category="Beverages">Beverages</button>
+            </nav>
+
+            <section class="deals-section" aria-label="Deals and menu products">
+                <div class="section-header">
+                    <div class="heading-block">
+                        <h2 id="deal-title">Midnight Deals</h2>
+                        <div class="timer-box">
+                            <span>Closes in</span>
+                            <strong id="deal-timer">8:48</strong>
+                        </div>
+                    </div>
+                    <span class="count-tag" id="deal-count">5 Items</span>
+                </div>
+
+                <label class="menu-search" for="menuSearch">
+                    <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                    <input id="menuSearch" type="search" placeholder="Search Raja's menu" autocomplete="off" />
+                </label>
+
+                <div class="product-grid" id="productGrid"></div>
+            </section>
+        </main>
+    </div>
+
+    <aside class="cart-drawer" id="cartDrawer" aria-hidden="true">
+        <div class="cart-header">
+            <div>
+                <p class="eyebrow">Your Order</p>
+                <h3>Cart Summary</h3>
+            </div>
+            <button class="close-cart" id="closeCart" type="button" aria-label="Close cart">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div class="cart-items" id="cartItems"></div>
+
+        <div class="cart-footer">
+            <div class="cart-total-row">
+                <span>Total</span>
+                <strong id="cartTotal">Rs. 0</strong>
+            </div>
+            <button class="checkout-btn" id="checkoutBtn" type="button">Continue to checkout</button>
+        </div>
+    </aside>
+
+    <div class="login-modal hidden" id="loginModal" aria-hidden="true">
+        <div class="login-panel" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+            <button class="close-login" type="button" aria-label="Close login">&times;</button>
+
+            <div class="login-header">
+                <div class="logo-mark small">R</div>
+                <div>
+                    <p class="eyebrow">Welcome</p>
+                    <h3 id="loginTitle">Sign in</h3>
+                </div>
+            </div>
+
+            <p class="login-subtext">Serve yourself with faster ordering and perfect pizza deals.</p>
+
+            <form id="loginForm" novalidate>
+                <label>
+                    <span>Email</span>
+                    <input type="email" id="emailInput" placeholder="you@example.com" required />
+                </label>
+
+                <label>
+                    <span>Password</span>
+                    <input type="password" id="passwordInput" placeholder="Enter your password" required />
+                </label>
+
+                <div class="form-row">
+                    <label class="remember">
+                        <input type="checkbox" checked />
+                        <span>Remember me</span>
+                    </label>
+                    <button type="button" class="text-link" id="createAccountLink">Forgot password?</button>
+                </div>
+
+                <button type="submit" class="submit-btn">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="workflow-modal hidden" id="accountModal" aria-hidden="true">
+        <section class="workflow-panel" role="dialog" aria-modal="true" aria-labelledby="accountTitle">
+            <button class="workflow-close" type="button" data-close-modal aria-label="Close account form"><i
+                    class="fa-solid fa-xmark"></i></button>
+            <p class="eyebrow">Raja's Rewards</p>
+            <h2 id="accountTitle">Create your account</h2>
+            <p class="workflow-description">Save your details and make your next order quicker.</p>
+            <form id="accountForm" class="workflow-form">
+                <label>Full name<input name="name" type="text" autocomplete="name" required /></label>
+                <label>Email<input name="email" type="email" autocomplete="email" required /></label>
+                <label>Mobile number<input name="phone" type="tel" autocomplete="tel" placeholder="03XX XXXXXXX"
+                        required /></label>
+                <label>Password<input name="password" type="password" minlength="8" autocomplete="new-password"
+                        required /></label>
+                <button class="workflow-submit" type="submit">Create account</button>
+            </form>
+        </section>
+    </div>
+
+    <div class="workflow-modal hidden" id="locationModal" aria-hidden="true">
+        <section class="workflow-panel location-panel" role="dialog" aria-modal="true" aria-labelledby="locationTitle">
+            <button class="workflow-close" type="button" data-close-modal aria-label="Close location picker"><i
+                    class="fa-solid fa-xmark"></i></button>
+            <p class="eyebrow">Delivery address</p>
+            <h2 id="locationTitle">Where should we deliver?</h2>
+            <div class="map-controls">
+                <input id="locationSearch" type="search" placeholder="Search a city or area in Pakistan"
+                    aria-label="Search area or address" />
+                <button type="button" id="findLocationBtn" class="outline-action"><i
+                        class="fa-solid fa-location-crosshairs"></i> Use my location</button>
+            </div>
+            <div id="deliveryMap" class="delivery-map" role="application" aria-label="English-language map of Pakistan">
+            </div>
+            <p class="map-service-area">English map · Select a delivery location anywhere in Pakistan.</p>
+            <form id="locationForm" class="workflow-form location-form">
+                <label>House, street, area<input id="locationAddress" name="address" type="text"
+                        placeholder="House no., street, neighbourhood" required /></label>
+                <button class="workflow-submit" type="submit">Save delivery location</button>
+            </form>
+        </section>
+    </div>
+
+    <div class="workflow-modal hidden" id="orderModal" aria-hidden="true">
+        <section class="workflow-panel order-panel" role="dialog" aria-modal="true" aria-labelledby="orderTitle">
+            <button class="workflow-close" type="button" data-close-modal aria-label="Close order form"><i
+                    class="fa-solid fa-xmark"></i></button>
+            <p class="eyebrow">Delivery order</p>
+            <h2 id="orderTitle">Your order details</h2>
+            <div class="order-summary" id="orderSummary"></div>
+            <div class="quick-add-row">
+                <label for="orderProduct">Add a menu item</label>
+                <div>
+                    <select id="orderProduct" aria-label="Choose menu item"></select>
+                    <button type="button" id="addOrderItemBtn" class="outline-action">Add item</button>
+                </div>
+            </div>
+            <div class="pizza-customization" id="pizzaCustomization">
+                <p class="customization-title">Make it your own</p>
+                <div class="form-columns">
+                    <label>Pizza size<select id="pizzaSize" name="pizzaSize">
+                            <option value="regular" data-price="0">Regular</option>
+                            <option value="large" data-price="450">Large (+Rs. 450)</option>
+                            <option value="party" data-price="850">Party (+Rs. 850)</option>
+                        </select></label>
+                    <label>Crust<select id="pizzaCrust" name="pizzaCrust">
+                            <option value="classic" data-price="0">Classic hand-tossed</option>
+                            <option value="thin" data-price="150">Thin &amp; crispy (+Rs. 150)</option>
+                            <option value="stuffed" data-price="350">Cheese-stuffed (+Rs. 350)</option>
+                        </select></label>
+                    <label>Cheese<select id="pizzaCheese" name="pizzaCheese">
+                            <option value="regular" data-price="0">Classic mozzarella</option>
+                            <option value="extra" data-price="200">Extra mozzarella (+Rs. 200)</option>
+                        </select></label>
+                    <label>Spice<select id="pizzaSpice" name="pizzaSpice">
+                            <option>Regular</option>
+                            <option>Mild</option>
+                            <option>Hot</option>
+                        </select></label>
+                </div>
+                <fieldset class="topping-options">
+                    <legend>Premium toppings</legend>
+                    <label><input type="checkbox" name="topping" value="Smoked chicken" data-price="180" /> Smoked
+                        chicken (+Rs. 180)</label>
+                    <label><input type="checkbox" name="topping" value="Black olives" data-price="120" /> Black olives
+                        (+Rs. 120)</label>
+                    <label><input type="checkbox" name="topping" value="Jalapenos" data-price="100" /> Jalapenos (+Rs.
+                        100)</label>
+                </fieldset>
+                <div class="form-columns order-extras">
+                    <label>Cold drink<select id="orderDrink" name="drink">
+                            <option value="none" data-price="0">No drink</option>
+                            <option value="Cola 345ml" data-price="160">Cola 345ml (+Rs. 160)</option>
+                            <option value="Cola 1L" data-price="280">Cola 1L (+Rs. 280)</option>
+                            <option value="Cola 1.5L" data-price="390">Cola 1.5L (+Rs. 390)</option>
+                        </select></label>
+                    <label>Quantity<select id="orderQuantity" name="quantity">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select></label>
+                </div>
+            </div>
+            <form id="orderForm" class="workflow-form">
+                <div class="form-columns">
+                    <label>Full name<input name="name" type="text" autocomplete="name" required /></label>
+                    <label>Mobile number<input name="phone" type="tel" autocomplete="tel" placeholder="03XX XXXXXXX"
+                            required /></label>
+                </div>
+                <label>Delivery address<input id="orderAddress" name="address" type="text" autocomplete="street-address"
+                        required placeholder="House no., street, area" /></label>
+                <label>Delivery instructions <span class="optional-label">Optional</span><textarea name="instructions"
+                        rows="2" placeholder="Gate, floor, or other delivery note"></textarea></label>
+                <label>Payment method<select name="payment" required>
+                        <option value="Cash on delivery">Cash on delivery</option>
+                        <option value="Pay at pickup">Pay at pickup</option>
+                    </select></label>
+                <div class="order-total-row"><span>Order total</span><strong id="orderTotal">Rs. 0</strong></div>
+                <button class="workflow-submit" type="submit">Place order</button>
+            </form>
+        </section>
+    </div>
+
+    <div class="toast" id="toast" aria-live="polite"></div>
+</body>
+
+</html>
